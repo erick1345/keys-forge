@@ -1,0 +1,22 @@
+# Variáveis de ambiente - NUNCA commitar
+.env
+nginx/certs/
+
+# Subprojetos de codigo (cada um tem seu proprio repositorio no GitHub)
+/backend/
+/frontend/
+/mobile/
+
+# Dependências
+node_modules/
+
+# Build
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Dump SQL duplicado (usar init.sql)
+keys-forge *.sql
