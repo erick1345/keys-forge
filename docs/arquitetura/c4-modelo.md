@@ -43,13 +43,15 @@ flowchart TB
         api["⚙️ Backend API<br/>Node + Express (TypeScript)"]
         mysql[("🗄️ MySQL<br/>dados persistentes")]
         redis[("⚡ Redis<br/>cache + Pub/Sub")]
+        worker["⚙️ events-worker<br/>microsserviço de eventos"]
     end
 
     usuario -->|"HTTPS"| nginx
     nginx -->|"/ → site"| front
     nginx -->|"/api → REST"| api
     api -->|"SQL (mysql2)"| mysql
-    api -->|"cache-aside + eventos"| redis
+    api -->|"cache-aside + publica eventos"| redis
+    redis -->|"eventos (Pub/Sub)"| worker
 ```
 
 **Containers**
@@ -61,9 +63,10 @@ flowchart TB
 | **Backend API** | Node + Express | Regras de negócio, autenticação JWT, CRUD, compras |
 | **MySQL** | MySQL 8 | Guarda usuários, jogos e compras |
 | **Redis** | Redis 7 | Cache (cache-aside com TTL) e mensageria (Pub/Sub de eventos) |
+| **events-worker** | Node (microsserviço) | Consome os eventos do Redis de forma independente (ex.: notificações) |
 
 Tudo é orquestrado com **Docker Compose**. O Nginx é o único ponto exposto;
-backend, banco e Redis ficam na rede interna.
+backend, banco, Redis e o `events-worker` ficam na rede interna.
 
 > Observação: os diagramas estão em Mermaid, então o GitHub e o VS Code
 > (com a extensão Mermaid) renderizam as imagens automaticamente.

@@ -36,8 +36,10 @@ O sistema inteiro (frontend, backend, MySQL, Redis, Nginx) é orquestrado com
 
 ## Alternativas consideradas
 
-- **Microserviços** — descartado. Traria complexidade (rede, deploys
+- **Microserviços (para tudo)** — descartado. Traria complexidade (rede, deploys
   separados, observabilidade distribuída) sem benefício real no escopo atual.
+  **Exceção:** extraímos **um** microserviço de eventos (`events-worker`),
+  deixando a arquitetura **híbrida** — ver [ADR 0004](0004-microservico-de-eventos.md).
 - **Modulith com módulos fortemente isolados** — bom caminho futuro, mas
   exagerado agora; a divisão em camadas já atende.
 
