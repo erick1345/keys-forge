@@ -57,6 +57,21 @@ services:
     expose:
       - "3001"
 
+  # Microservico independente: consome os eventos de dominio via Redis Pub/Sub
+  events-worker:
+    build:
+      context: ./events-worker
+      dockerfile: Dockerfile
+    container_name: keys-forge-events-worker
+    restart: unless-stopped
+    environment:
+      REDIS_HOST: redis
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - internal
+
   frontend:
     build:
       context: ./frontend
